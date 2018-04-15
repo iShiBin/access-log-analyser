@@ -41,8 +41,11 @@ public class AccessLogMR extends Configured implements Tool {
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] tokens = value.toString().split("]|\\["); // split the string using either ] or [
-            date.set(LocalDate.parse(tokens[1], formatter).toString()); // ISO-8601 format uuuu-MM-dd
-            context.write(date, ONE);
+            
+            if(tokens !=null && tokens.length > 1) { // bug fix: change from 0 to 1
+                date.set(LocalDate.parse(tokens[1], formatter).toString()); // ISO-8601 format uuuu-MM-dd
+                context.write(date, ONE);
+            }
         }
     }
 
@@ -52,9 +55,7 @@ public class AccessLogMR extends Configured implements Tool {
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
                 throws IOException, InterruptedException {
             
-//          parallelize the count operation without looping explicitly using Java 8 stream feature
             int count = StreamSupport.stream(values.spliterator(), false).mapToInt(i->i.get()).sum();
-            
             context.write(key, new IntWritable(count));
         }
     }
