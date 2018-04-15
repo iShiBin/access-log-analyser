@@ -5,9 +5,18 @@
 * Which countries did the traffic come from, and what is the trend of the traffic looks like?  
 Note: Use 3rd party package to map IP with Geoinformation.
 
-I will utilize Hadoop and Hive to analyze data and use Superset to visualize some of the results.
- 
+I will use multiple utilities to answer above questions, inculding but not least to the following:
+
+- Hadoop single node
+- Hadoop cluster (Amazon EMR)
+- Flink
+- Pig
+- Hive
+- Superset
+- Spark
+
 # Dataset
+
 **Size**
 200G
 
