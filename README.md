@@ -18,7 +18,9 @@ I will use multiple utilities to answer above questions, inculding but not least
 # Dataset
 
 **Size**
-200G
+
+* 93 data files
+* ~ 2G each, 200G in total
 
 **Format**
 The raw data is in plain text format. Here is some sample data.
