@@ -3,7 +3,8 @@
 * How many users visited this website each day?
 * What is the busiest hour?
 * Which countries did the traffic come from, and what is the trend of the traffic looks like?  
-Note: Use 3rd party package to map IP with Geoinformation.
+  Note: Use 3rd party package to map IP with Geoinformation.
+* What is the most frequently visited apps category in US?
 
 I will use multiple utilities to answer above questions, inculding but not least to the following:
 
@@ -17,7 +18,9 @@ I will use multiple utilities to answer above questions, inculding but not least
 
 # Dataset
 
-**Size**
+## Access Log
+
+- one month web access log
 
 * 93 data files
 * ~ 2G each, 200G in total
@@ -128,3 +131,10 @@ The raw data is in plain text format. Here is some sample data.
 ```
 **Link**
 https://s3.amazonaws.com/cloudacl/access_log/index.html
+
+**Sample**
+https://s3-us-west-2.amazonaws.com/neu-is/big-data/sample/input/access_log_sample.txt
+
+## Android App Metadata
+This is the reference data to get the catetory of each android application by id.
+

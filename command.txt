@@ -1,0 +1,54 @@
+docker run -d -P -p 2222:22 -p 8000:8000 -p 10000:10000 -v /Users/bin/Documents/NEU/Courses/CS502-1801:/src --name cs502 daijyc/bittiger-cs502-week3
+
+hadoop@44efef89bad3:~/hadoop-2.9.0$ ./start-all.sh
+Starting namenodes on [localhost]
+localhost: starting namenode, logging to /home/hadoop/hadoop-2.9.0/logs/hadoop-hadoop-namenode-44efef89bad3.out
+localhost: starting datanode, logging to /home/hadoop/hadoop-2.9.0/logs/hadoop-hadoop-datanode-44efef89bad3.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /home/hadoop/hadoop-2.9.0/logs/hadoop-hadoop-secondarynamenode-44efef89bad3.out
+starting yarn daemons
+starting resourcemanager, logging to /home/hadoop/hadoop-2.9.0/logs/yarn-hadoop-resourcemanager-44efef89bad3.out
+localhost: starting nodemanager, logging to /home/hadoop/hadoop-2.9.0/logs/yarn-hadoop-nodemanager-44efef89bad3.out
+starting historyserver, logging to /home/hadoop/hadoop-2.9.0/logs/mapred-hadoop-historyserver-44efef89bad3.out
+starting historyserver, logging to /home/hadoop/hadoop-2.9.0/logs/yarn-hadoop-historyserver-44efef89bad3.out
+DEPRECATED: Use of this command to start the timeline server is deprecated.
+Instead use the timelineserver command for it.
+
+hive> select hour(dt), count(*) ct from access_log_partitioned group by hour(dt)
+    > order by ct desc limit 1;
+2018-04-21T19:48:12,729 INFO [pool-11-thread-12] org.apache.hadoop.hive.metastore.HiveMetaStore - 12: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-21T19:48:13,146 INFO [pool-11-thread-12] org.apache.hadoop.hive.metastore.HiveMetaStore - 12: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-21T19:48:13,286 INFO [pool-11-thread-12] org.apache.hadoop.hive.metastore.HiveMetaStore - 12: source:127.0.0.1 get_partitions : db=default tbl=access_log_partitioned
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = hadoop_20180421194812_151bfee4-0e7c-4bc8-b284-3b123011b37c
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1524339389178_0003, Tracking URL = http://a112ec133758:8088/proxy/application_1524339389178_0003/
+Kill Command = /home/hadoop/hadoop-2.9.0/bin/hadoop job  -kill job_1524339389178_0003
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2018-04-21 19:48:22,913 Stage-1 map = 0%,  reduce = 0%
+2018-04-21 19:49:30,253 Stage-1 map = 0%,  reduce = 0%, Cumulative CPU 6.49 sec
+2018-04-21 19:50:45,239 Stage-1 map = 0%,  reduce = 0%, Cumulative CPU 12.12 sec
+2018-04-21 19:53:24,910 Stage-1 map = 0%,  reduce = 0%, Cumulative CPU 21.69 sec
+
+
+
+docker
+
+hadoop@35a39cc22721:~$ su
+Password: 
+root@35a39cc22721:/home/hadoop# find /var/lib/mysql -type f -exec touch {} \;
+root@35a39cc22721:/home/hadoop# service mysql start
+ * Starting MySQL database server mysqld                                                                                                             No directory, logging in with HOME=/
+                                                                                                                                              [fail]
+root@35a39cc22721:/home/hadoop# service mysql start
+ * Starting MySQL database server mysqld                                                                                                             No directory, logging in with HOME=/
+                                                                                                                                              [ OK ]
+

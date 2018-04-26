@@ -1,0 +1,25 @@
+$ pig -f aggr.pig -param INPUT=s3://neu-is/big-data/input -param OUTPUT=s3://neu-is/big-data/output-pig
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/hadoop/hadoop-2.9.0/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/hadoop/tez-0.7.0/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+18/04/17 16:44:20 INFO pig.ExecTypeProvider: Trying ExecType : LOCAL
+18/04/17 16:44:20 INFO pig.ExecTypeProvider: Trying ExecType : MAPREDUCE
+18/04/17 16:44:20 INFO pig.ExecTypeProvider: Picked MAPREDUCE as the ExecType
+2018-04-17 16:44:20,579 [main] INFO  org.apache.pig.Main - Apache Pig version 0.17.0 (r1797386) compiled Jun 02 2017, 15:41:58
+2018-04-17 16:44:20,580 [main] INFO  org.apache.pig.Main - Logging error messages to: /home/hadoop/pig/pig_1523983460577.log
+2018-04-17 16:44:21,290 [main] INFO  org.apache.pig.impl.util.Utils - Default bootup file /home/hadoop/.pigbootup not found
+2018-04-17 16:44:21,397 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2018-04-17 16:44:21,398 [main] INFO  org.apache.pig.backend.hadoop.executionengine.HExecutionEngine - Connecting to hadoop file system at: hdfs://localhost:9000
+2018-04-17 16:44:23,101 [main] INFO  org.apache.pig.PigServer - Pig Script ID for the session: PIG-aggr.pig-7dc3280d-9de0-4df6-a542-98586b3e050a
+2018-04-17 16:44:23,163 [main] INFO  org.apache.hadoop.yarn.client.api.impl.TimelineClientImpl - Timeline service address: null
+2018-04-17 16:44:24,020 [main] INFO  org.apache.pig.backend.hadoop.PigATSClient - Created ATS Hook
+2018-04-17 16:44:24,081 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
+2018-04-17 16:44:24,133 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
+2018-04-17 16:44:24,216 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
+2018-04-17 16:44:24,244 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
+2018-04-17 16:44:24,310 [main] ERROR org.apache.pig.tools.grunt.Grunt - ERROR 1200: Invalid Scheme: s3
+Details at logfile: /home/hadoop/pig/pig_1523983460577.log
+2018-04-17 16:44:24,435 [main] INFO  org.apache.pig.Main - Pig script completed in 4 seconds and 135 milliseconds (4135 ms)
+
