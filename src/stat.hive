@@ -1,0 +1,29 @@
+
+create table access_log(country string, dt timestamp, cat string, count int)
+row format serde 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' with
+serdeproperties('field.delim'='\t','timestamp.formats'='yyyy-MM-dd HH:mm:ss')
+stored as textfile;
+
+-- quite and put the part files
+
+ 
+set hive.exec.dynamic.partition.mode=nonstrict;
+insert overwrite table access_log_partitioned partition(d) select country, dt, cat, count, cast(dt as date) from access_log;
+show partitions access_log_partitioned;
+
+
+create table access_log_partitioned(country string, dt timestamp, cat string, count int) partitioned by(d date) row format serde 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' with serdeproperties('field.delim'='\t', 'timestamp.formats'='yyyy-MM-dd HH:mm:ss') stored as textfile;
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+
+-- something is wrong here but it may not matter
+insert overwrite table access_log_partitioned partition(d) select country, dt, cat,count, cast(dt as date) from access_log;
+
+insert overwrite table access_log_partitioned partition(d) select country, dt, cat,count, cast(dt as date) as d from access_log;
+
+create table country_mapping(code string, country string) row format delimited fields terminated by '\t' stored as textfile;
+
+load data local inpath 'country.txt' into table country_mapping;
+
+
+select hour(dt), count(*) ct from access_log group by hour(dt) order by ct desc limit 1;

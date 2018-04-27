@@ -1,15 +1,16 @@
 # Access Log Analyser
 
+* The data set is too large. How to get a random sample?
 * How many users visited this website each day?
 * What is the busiest hour?
-* Which countries did the traffic come from, and what is the trend of the traffic looks like?  
-Note: Use 3rd party package to map IP with Geoinformation.
+* Which countries did the traffic come from?
+  Note: Use 3rd party package to map IP with Geoinformation.
+* What is the top 10 URL category in US?
+* What is the trend of the traffic looks like in total, or by country? 
 
-I will use multiple utilities to answer above questions, inculding but not least to the following:
+I will use multiple utilities as below to answer above questions.
 
-- Hadoop single node
-- Hadoop cluster (Amazon EMR)
-- Flink
+- Hadoop ( single node and Amazon EMR cluster)
 - Pig
 - Hive
 - Superset
@@ -17,7 +18,9 @@ I will use multiple utilities to answer above questions, inculding but not least
 
 # Dataset
 
-**Size**
+## Access Log
+
+- one month web access log
 
 * 93 data files
 * ~ 2G each, 200G in total
@@ -128,3 +131,7 @@ The raw data is in plain text format. Here is some sample data.
 ```
 **Link**
 https://s3.amazonaws.com/cloudacl/access_log/index.html
+
+**Sample**
+https://s3-us-west-2.amazonaws.com/neu-is/big-data/sample/input/access_log_sample.txt
+
