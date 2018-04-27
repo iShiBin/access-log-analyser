@@ -16,6 +16,7 @@ import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -37,8 +38,20 @@ public class SamplerMR extends Configured implements Tool {
 
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            if (random.nextDouble() < rate) {
+            if (random.nextDouble() < rate && value.toString().contains("GET /axis2/")) { // valid log entry
                 context.write(NullWritable.get(), value);
+            }
+        }
+    }
+    
+    public static class TheReducer extends Reducer<NullWritable, Text, NullWritable, Text> {
+       
+        @Override
+        public void reduce(NullWritable key, Iterable<Text> values, Context context) 
+                throws IOException, InterruptedException {
+            
+            for (Text v: values) {
+                context.write(NullWritable.get(), v);
             }
         }
     }
@@ -49,7 +62,7 @@ public class SamplerMR extends Configured implements Tool {
 
         Job job = Job.getInstance(conf, "Random Sampler");
         job.setJarByClass(SamplerMR.class);
-        job.setNumReduceTasks(0); // map only job
+//        job.setNumReduceTasks(0); // map only job, comment to merge output files
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         job.setInputFormatClass(TextInputFormat.class);

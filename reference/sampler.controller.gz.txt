@@ -1,0 +1,66 @@
+2018-04-27T01:11:27.020Z INFO Ensure step 2 jar file s3://neu-is/big-data/SamplerMR.jar
+2018-04-27T01:11:27.886Z INFO StepRunner: Created Runner for step 2
+INFO startExec 'hadoop jar /mnt/var/lib/hadoop/steps/s-27FS39UK6QMDJ/SamplerMR.jar SamplerMR -D mapreduce.output.basename=access_log_sample s3://cloudacl/access_log s3://neu-is/big-data/sample'
+INFO Environment:
+  PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/opt/aws/bin
+  LESS_TERMCAP_md=[01;38;5;208m
+  LESS_TERMCAP_me=[0m
+  HISTCONTROL=ignoredups
+  LESS_TERMCAP_mb=[01;31m
+  AWS_AUTO_SCALING_HOME=/opt/aws/apitools/as
+  UPSTART_JOB=rc
+  LESS_TERMCAP_se=[0m
+  HISTSIZE=1000
+  HADOOP_ROOT_LOGGER=INFO,DRFA
+  JAVA_HOME=/etc/alternatives/jre
+  AWS_DEFAULT_REGION=us-west-2
+  AWS_ELB_HOME=/opt/aws/apitools/elb
+  LESS_TERMCAP_us=[04;38;5;111m
+  EC2_HOME=/opt/aws/apitools/ec2
+  TERM=linux
+  runlevel=3
+  LANG=en_US.UTF-8
+  AWS_CLOUDWATCH_HOME=/opt/aws/apitools/mon
+  MAIL=/var/spool/mail/hadoop
+  LESS_TERMCAP_ue=[0m
+  LOGNAME=hadoop
+  PWD=/
+  LANGSH_SOURCED=1
+  HADOOP_CLIENT_OPTS=-Djava.io.tmpdir=/mnt/var/lib/hadoop/steps/s-27FS39UK6QMDJ/tmp
+  _=/etc/alternatives/jre/bin/java
+  CONSOLETYPE=serial
+  RUNLEVEL=3
+  LESSOPEN=||/usr/bin/lesspipe.sh %s
+  previous=N
+  UPSTART_EVENTS=runlevel
+  AWS_PATH=/opt/aws
+  USER=hadoop
+  UPSTART_INSTANCE=
+  PREVLEVEL=N
+  HADOOP_LOGFILE=syslog
+  HOSTNAME=ip-172-31-11-132
+  HADOOP_LOG_DIR=/mnt/var/log/hadoop/steps/s-27FS39UK6QMDJ
+  EC2_AMITOOL_HOME=/opt/aws/amitools/ec2
+  SHLVL=5
+  HOME=/home/hadoop
+  HADOOP_IDENT_STRING=hadoop
+INFO redirectOutput to /mnt/var/log/hadoop/steps/s-27FS39UK6QMDJ/stdout
+INFO redirectError to /mnt/var/log/hadoop/steps/s-27FS39UK6QMDJ/stderr
+INFO Working dir /mnt/var/lib/hadoop/steps/s-27FS39UK6QMDJ
+INFO ProcessRunner started child process 22761 :
+hadoop   22761  4395  0 01:11 ?        00:00:00 bash /usr/lib/hadoop/bin/hadoop jar /mnt/var/lib/hadoop/steps/s-27FS39UK6QMDJ/SamplerMR.jar SamplerMR -D mapreduce.output.basename=access_log_sample s3://cloudacl/access_log s3://neu-is/big-data/sample
+2018-04-27T01:11:31.909Z INFO HadoopJarStepRunner.Runner: startRun() called for s-27FS39UK6QMDJ Child Pid: 22761
+INFO Synchronously wait child process to complete : hadoop jar /mnt/var/lib/hadoop/steps/s-27FS39UK...
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO Process still running
+INFO waitProcessCompletion ended with exit code 0 : hadoop jar /mnt/var/lib/hadoop/steps/s-27FS39UK...
+INFO total process run time: 8290 seconds
+2018-04-27T03:29:40.734Z INFO Step created jobs: job_1524790101458_0001
+2018-04-27T03:29:40.734Z INFO Step succeeded with exitCode 0 and took 8290 seconds
