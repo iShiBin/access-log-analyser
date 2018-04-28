@@ -1,0 +1,76 @@
+hive> desc access_log;
+2018-04-19T02:45:52,860 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:45:52,937 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+OK
+country             	string              	                    
+dt                  	timestamp           	                    
+cat                 	string              	                    
+count               	int                 	                    
+Time taken: 0.127 seconds, Fetched: 4 row(s)
+hive> select * from access_log limit 10;
+2018-04-19T02:46:01,375 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:46:01,519 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+OK
+A1	2017-10-04 17:00:00	online-storage	2
+A1	2017-10-12 11:00:00	search-engine	2
+AD	2017-10-02 12:00:00	business-and-economy	3
+AD	2017-10-03 18:00:00	news-and-media	1
+AD	2017-10-04 12:00:00	search-engine	6
+AD	2017-10-05 19:00:00	search-engine	8
+AD	2017-10-05 21:00:00	unknown	1
+AD	2017-10-06 07:00:00	unknown	1
+AD	2017-10-06 16:00:00	news-and-media	4
+AD	2017-10-09 15:00:00	adult-and-pornography	1
+Time taken: 0.258 seconds, Fetched: 10 row(s);
+
+hive>  select hour(dt), count(*) ct from access_log_partitioned group by hour(dt)
+    > order by ct desc limit 1;
+2018-04-19T02:35:18,047 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:35:18,326 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:35:18,434 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_partitions : db=default tbl=access_log_partitioned
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = hadoop_20180419023518_b29a07aa-ccdf-42a7-a0fc-cd1a0d439775
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+FAILED: Execution Error, return code -101 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask. org.apache.hadoop.mapreduce.v2.util.MRApps.addLog4jSystemProperties(Lorg/apache/hadoop/mapred/Task;Ljava/util/List;Lorg/apache/hadoop/conf/Configuration;)V
+hive> select hour(dt), count(*) ct from access_log group by hour(dt) order by ct desc limit 1;
+2018-04-19T02:42:58,780 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:42:59,011 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = hadoop_20180419024258_e7a13fc1-c26a-4044-8e67-d6984fedf34d
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+FAILED: Execution Error, return code -101 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask. org.apache.hadoop.mapreduce.v2.util.MRApps.addLog4jSystemProperties(Lorg/apache/hadoop/mapred/Task;Ljava/util/List;Lorg/apache/hadoop/conf/Configuration;)V
+
+hive> set mapreduce.job.reduces=1
+    > ;
+
+hive> select hour(dt), count(*) ct from access_log group by hour(dt) order by ct desc limit 1;
+2018-04-19T02:43:18,309 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:43:18,560 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = hadoop_20180419024318_0df0316f-c5b6-410c-b154-2f0c918f1347
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Defaulting to jobconf value of: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+FAILED: Execution Error, return code -101 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask. org.apache.hadoop.mapreduce.v2.util.MRApps.addLog4jSystemProperties(Lorg/apache/hadoop/mapred/Task;Ljava/util/List;Lorg/apache/hadoop/conf/Configuration;)V

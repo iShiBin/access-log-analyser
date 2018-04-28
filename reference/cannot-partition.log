@@ -1,0 +1,53 @@
+hive>  
+    > create table access_log_partitioned(country string, dt timestamp, cat string,
+    > count int) partitioned by (d date) row format delimited fields terminated by
+    > '\t' stored as textfile;
+2018-04-19T02:32:45,089 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_database: default
+2018-04-19T02:32:45,252 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 create_table: Table(tableName:access_log_partitioned, dbName:default, owner:hadoop, createTime:1524105165, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:country, type:string, comment:null), FieldSchema(name:dt, type:timestamp, comment:null), FieldSchema(name:cat, type:string, comment:null), FieldSchema(name:count, type:int, comment:null)], location:null, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=	, field.delim=	}), bucketCols:[], sortCols:[], parameters:{}, skewedInfo:SkewedInfo(skewedColNames:[], skewedColValues:[], skewedColValueLocationMaps:{}), storedAsSubDirectories:false), partitionKeys:[FieldSchema(name:d, type:date, comment:null)], parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, privileges:PrincipalPrivilegeSet(userPrivileges:{hadoop=[PrivilegeGrantInfo(privilege:INSERT, createTime:-1, grantor:hadoop, grantorType:USER, grantOption:true), PrivilegeGrantInfo(privilege:SELECT, createTime:-1, grantor:hadoop, grantorType:USER, grantOption:true), PrivilegeGrantInfo(privilege:UPDATE, createTime:-1, grantor:hadoop, grantorType:USER, grantOption:true), PrivilegeGrantInfo(privilege:DELETE, createTime:-1, grantor:hadoop, grantorType:USER, grantOption:true)]}, groupPrivileges:null, rolePrivileges:null), temporary:false)
+2018-04-19T02:32:45,279 INFO [pool-11-thread-24] org.apache.hadoop.hive.common.FileUtils - Creating directory if it doesn't exist: hdfs://localhost:9000/user/hive/warehouse/access_log_partitioned
+OK
+Time taken: 0.46 seconds
+hive> ALTER TABLE access_log_partitioned SET SERDEPROPERTIES
+    > ('timestamp.formats'='yyyy-MM-dd HH:mm:ss');
+2018-04-19T02:32:52,460 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:32:52,584 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:32:52,656 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 alter_table: db=default tbl=access_log_partitioned newtbl=access_log_partitioned
+OK
+Time taken: 0.369 seconds
+hive> alter table access_log_partitioned add partition(d='2017-11-01');
+2018-04-19T02:33:01,982 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:02,527 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:02,586 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: add_partitions
+2018-04-19T02:33:02,653 INFO [HMSHandler #1] org.apache.hadoop.hive.common.FileUtils - Creating directory if it doesn't exist: hdfs://localhost:9000/user/hive/warehouse/access_log_partitioned/d=2017-11-01
+OK
+Time taken: 0.823 seconds
+hive>  
+    > set hive.exec.dynamic.partition.mode=nonstrict;
+hive> insert overwrite table access_log_partitioned partition(d) select country, dt,
+    > cat, count, cast(dt as date) from access_log;
+2018-04-19T02:33:30,264 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:33:30,290 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:33,001 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log
+2018-04-19T02:33:33,033 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:33,641 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = hadoop_20180419023330_976ca5f5-b38f-4c38-937e-9914e3a98ab7
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+FAILED: Execution Error, return code -101 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask. org.apache.hadoop.mapreduce.v2.util.MRApps.addLog4jSystemProperties(Lorg/apache/hadoop/mapred/Task;Ljava/util/List;Lorg/apache/hadoop/conf/Configuration;)V
+hive> show partitions access_log_partitioned;
+2018-04-19T02:33:53,518 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:53,550 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:53,583 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:53,666 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:33:53,696 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_partition_names : db=default tbl=access_log_partitioned
+OK
+d=2017-11-01
+Time taken: 0.258 seconds, Fetched: 1 row(s)
+hive> select * from access_log_partitioned limit 10;
+2018-04-19T02:34:20,792 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:34:20,986 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_table : db=default tbl=access_log_partitioned
+2018-04-19T02:34:21,105 INFO [pool-11-thread-24] org.apache.hadoop.hive.metastore.HiveMetaStore - 24: source:127.0.0.1 get_partitions : db=default tbl=access_log_partitioned
+OK
+Time taken: 0.436 seconds
